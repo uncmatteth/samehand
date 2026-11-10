@@ -5,7 +5,7 @@ import { useStudio } from "@/lib/studio-store";
 import { zipFinals } from "@/lib/zip";
 import { toast } from "sonner";
 
-export function StudioToolbar({ aiAvailable }: { aiAvailable: boolean }) {
+export function StudioToolbar({ aiAvailable, simple = false }: { aiAvailable: boolean; simple?: boolean }) {
   const house = useStudio((s) => s.house);
   const pages = useStudio((s) => s.pages);
   const run = useStudio((s) => s.run);
@@ -103,7 +103,7 @@ export function StudioToolbar({ aiAvailable }: { aiAvailable: boolean }) {
           disabled={!house || !firstQueued || busy || !aiAvailable}
         >
           <Play className="ml-0.5" />
-          Proof 1
+          {simple ? "Test one photo" : "Proof 1"}
         </Button>
         <Button
           type="button"
@@ -111,7 +111,7 @@ export function StudioToolbar({ aiAvailable }: { aiAvailable: boolean }) {
           onClick={() => void restyleRemaining()}
           disabled={!canRemaining || busy || !aiAvailable}
         >
-          Restyle remaining
+          {simple ? "Do the rest" : "Restyle remaining"}
         </Button>
         {busy ? (
           <Button type="button" variant="outline" onClick={pause}>
@@ -141,7 +141,7 @@ export function StudioToolbar({ aiAvailable }: { aiAvailable: boolean }) {
         ) : (
           <Button type="button" variant="outline" onClick={() => void prepareZip()} disabled={!canZip}>
             <Archive />
-            Zip finals
+            {simple ? "Download zip" : "Zip finals"}
           </Button>
         )}
         <Button
@@ -151,12 +151,18 @@ export function StudioToolbar({ aiAvailable }: { aiAvailable: boolean }) {
           disabled={!house && pages.length === 0}
         >
           <Trash2 />
-          Start over
+          {simple ? "Clear episode" : "Start over"}
         </Button>
       </div>
-      <p className="text-xs text-muted">
-        Save and Zip finals only export restyles already in the cards. No originals.
-      </p>
+      {simple ? (
+        <p className="text-xs text-muted">
+          Test one → check it → Do the rest → Download zip.
+        </p>
+      ) : (
+        <p className="text-xs text-muted">
+          Zip only has finished restyles, not originals.
+        </p>
+      )}
     </div>
   );
 }

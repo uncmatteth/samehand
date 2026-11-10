@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Samehand",
+      "hasCanvas": false,
+      "bodyTextLen": 403,
+      "bodyTextHash": "08c7a75524bd25478a0122b72dd57b62ff5023d92a7cb3180d1f6adf60545ecc",
+      "bodyTextPrefix": "STUDIO Samehand Restyle pages in the house look, then build the ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Samehand",
+      "hasCanvas": false,
+      "bodyTextLen": 502,
+      "bodyTextHash": "9d3e8d67a9eec2d655c516b594fa6fca1b65e713a607c15b7f924a7432168eae",
+      "bodyTextPrefix": "STUDIO Samehand Restyle pages in the house look, then build the ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

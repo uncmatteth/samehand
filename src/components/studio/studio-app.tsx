@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
 import { CastPanel } from "@/components/studio/cast-panel";
 import { DropZone } from "@/components/studio/drop-zone";
-import { EnsemblePanel } from "@/components/studio/ensemble-panel";
 import { HousePlate } from "@/components/studio/house-plate";
 import { PageCard } from "@/components/studio/page-card";
 import { StudioToolbar } from "@/components/studio/studio-toolbar";
@@ -12,7 +11,7 @@ import { checkAiAvailable } from "@/lib/restyle";
 import { useStudio } from "@/lib/studio-store";
 import { cn } from "@/lib/utils";
 
-type Workspace = "bible" | "pages" | "ensemble";
+type Step = "cast" | "episode";
 
 export function StudioApp() {
   const hydrate = useStudio((s) => s.hydrate);
@@ -21,9 +20,9 @@ export function StudioApp() {
   const house = useStudio((s) => s.house);
   const pages = useStudio((s) => s.pages);
   const addPages = useStudio((s) => s.addPages);
-  const castMembers = useCast((s) => s.members);
+  const members = useCast((s) => s.members);
   const [aiAvailable, setAiAvailable] = useState(true);
-  const [workspace, setWorkspace] = useState<Workspace>("bible");
+  const [step, setStep] = useState<Step>("cast");
 
   useEffect(() => {
     void hydrate();
@@ -34,119 +33,126 @@ export function StudioApp() {
     void checkAiAvailable().then((res) => setAiAvailable(res.available));
   }, []);
 
-  const aRooted = castMembers.filter((m) => m.tier === "A" && m.sourceBlob).length;
-  const aTotal = castMembers.filter((m) => m.tier === "A").length;
-  const aNormed = castMembers.filter((m) => m.tier === "A" && m.normStatus === "done").length;
+  const castNeed = members.filter((m) => m.tier !== "C" && m.sourceBlob);
+  const castDone = castNeed.filter((m) => m.normStatus === "done").length;
+  const castReady = castNeed.length > 0 && castDone >= castNeed.length;
 
   return (
     <div className="min-h-dvh">
       <Toaster position="top-center" richColors={false} />
       <header className="sticky top-0 z-20 border-b border-ink/10 bg-paper/95 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-5 py-4 sm:px-8">
+        <div className="mx-auto flex max-w-lg flex-col gap-3 px-5 py-4">
           <div>
-            <p className="text-xs uppercase tracking-wide text-ink-soft">Studio</p>
-            <h1 className="font-display text-3xl font-medium tracking-display sm:text-4xl">
+            <h1 className="font-display text-3xl font-medium tracking-display">
               Samehand
             </h1>
-            <p className="mt-1 max-w-2xl text-sm text-muted">
-              Bible: load roots → normalize craft → then Pages (E01 house + 167
-              stills). Cast survives Start over for the whole series.
+            <p className="mt-1 text-sm text-muted">
+              Two steps only. Characters first, then episode pictures.
             </p>
           </div>
           <div
-            className="grid grid-cols-3 gap-1 rounded-lg bg-fog p-1 shadow-[var(--shadow-border)] sm:max-w-lg"
+            className="grid grid-cols-2 gap-1 rounded-lg bg-fog p-1 shadow-[var(--shadow-border)]"
             role="tablist"
-            aria-label="Workspace"
           >
-            {(
-              [
-                ["bible", "Bible"],
-                ["pages", "Pages"],
-                ["ensemble", "Ensemble"],
-              ] as const
-            ).map(([id, label]) => (
-              <Button
-                key={id}
-                type="button"
-                role="tab"
-                aria-selected={workspace === id}
-                variant={workspace === id ? "default" : "ghost"}
-                className={cn(
-                  "min-h-12 text-base font-medium",
-                  workspace !== id && "shadow-none text-ink",
-                )}
-                onClick={() => setWorkspace(id)}
-              >
-                {label}
-              </Button>
-            ))}
+            <Button
+              type="button"
+              role="tab"
+              aria-selected={step === "cast"}
+              variant={step === "cast" ? "default" : "ghost"}
+              className={cn(
+                "min-h-12 text-base",
+                step !== "cast" && "shadow-none text-ink",
+              )}
+              onClick={() => setStep("cast")}
+            >
+              1 · Characters
+              {castReady ? " ✓" : ""}
+            </Button>
+            <Button
+              type="button"
+              role="tab"
+              aria-selected={step === "episode"}
+              variant={step === "episode" ? "default" : "ghost"}
+              className={cn(
+                "min-h-12 text-base",
+                step !== "episode" && "shadow-none text-ink",
+              )}
+              onClick={() => setStep("episode")}
+            >
+              2 · Episode
+            </Button>
           </div>
-          {workspace === "bible" ? (
-            <p className="text-xs text-olive">
-              Load roots → Proof normalize 1 → Normalize remaining
-              {aTotal ? ` · ${aNormed}/${aTotal} A normalized` : ""}.
-            </p>
-          ) : workspace === "pages" ? (
-            <p className="text-xs text-olive">
-              After bible is normalized: lock E01 house → drop 167 → Proof 1 →
-              restyle. Cast lock rides with every restyle.
-            </p>
-          ) : (
-            <p className="text-xs text-olive">
-              Ensemble — roster → group (2–5) → section → poster.
-            </p>
-          )}
         </div>
       </header>
 
-      <main
-        className={cn(
-          "mx-auto grid max-w-6xl gap-8 px-5 py-8 sm:px-8",
-          workspace === "pages" &&
-            "lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)]",
-        )}
-      >
-        {workspace === "bible" ? (
-          <CastPanel />
-        ) : workspace === "pages" ? (
-          <>
-            <HousePlate />
-            <section className="flex min-w-0 flex-col gap-5">
-              <StudioToolbar aiAvailable={aiAvailable} />
-              {hydrating ? (
-                <p className="text-sm text-muted">Restoring studio…</p>
-              ) : house ? (
-                <>
-                  <DropZone
-                    label="Drop episode pages"
-                    hint="E01 only for this pass. Center-cropped square, restyled once. Cast bible names ride in the prompt."
-                    multiple
-                    className="min-h-36 rounded-xl bg-paper-2 px-5 py-8 shadow-[var(--shadow-border)]"
-                    onFiles={(files) => void addPages(files)}
-                  />
-                  {pages.length > 0 ? (
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      {pages.map((page) => (
-                        <PageCard key={page.id} page={page} />
-                      ))}
-                    </div>
-                  ) : null}
-                </>
-              ) : (
-                <div className="rounded-xl bg-paper-2 px-5 py-16 text-center shadow-[var(--shadow-border)]">
-                  <p className="font-display text-lg tracking-display">
-                    Lock the house first
-                  </p>
-                  <p className="mt-1 text-sm text-muted">
-                    Use your E01 world plate (craft + materials). Character
-                    identity comes from the Bible tab, not the house face.
-                  </p>
-                </div>
-              )}
-            </section>
-          </>
+      <main className="mx-auto max-w-lg px-5 py-6">
+        {step === "cast" ? (
+          <CastPanel
+            onReadyForEpisode={() => setStep("episode")}
+          />
         ) : (
-          <EnsemblePanel aiAvailable={aiAvailable} />
+          <section className="flex flex-col gap-5">
+            {!castReady ? (
+              <div className="rounded-xl bg-paper-2 px-4 py-4 text-sm shadow-[var(--shadow-border)]">
+                <p className="font-medium">Finish characters first</p>
+                <p className="mt-1 text-muted">
+                  Go back to <strong>1 · Characters</strong> and hit the big
+                  green button until everyone is Ready.
+                </p>
+                <Button
+                  type="button"
+                  className="mt-3 w-full"
+                  onClick={() => setStep("cast")}
+                >
+                  Back to characters
+                </Button>
+              </div>
+            ) : null}
+
+            <div className="rounded-xl bg-paper-2 p-4 shadow-[var(--shadow-border)]">
+              <p className="text-xs uppercase tracking-wide text-ink-soft">
+                Episode pictures
+              </p>
+              <h2 className="mt-1 font-display text-xl tracking-display">
+                Your 167 photos
+              </h2>
+              <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-muted">
+                <li>Lock the house look (one button)</li>
+                <li>Drop your photos</li>
+                <li>Press Proof 1 — check that one</li>
+                <li>Press Restyle remaining</li>
+                <li>Zip when done</li>
+              </ol>
+            </div>
+
+            <HousePlate simple />
+
+            {house ? (
+              <>
+                <StudioToolbar aiAvailable={aiAvailable} simple />
+                <DropZone
+                  label="Drop your episode photos here"
+                  hint="All 167, or smaller batches. Wait for cropping to finish."
+                  multiple
+                  className="min-h-32 rounded-xl bg-paper-2 px-5 py-8 shadow-[var(--shadow-border)]"
+                  onFiles={(files) => void addPages(files)}
+                />
+                {hydrating ? (
+                  <p className="text-sm text-muted">Loading…</p>
+                ) : pages.length > 0 ? (
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {pages.map((page) => (
+                      <PageCard key={page.id} page={page} />
+                    ))}
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <p className="text-center text-sm text-muted">
+                Press Lock house above first.
+              </p>
+            )}
+          </section>
         )}
       </main>
     </div>

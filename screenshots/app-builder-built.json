@@ -1,0 +1,40 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Samehand",
+      "hasCanvas": false,
+      "bodyTextLen": 437,
+      "bodyTextHash": "245d0ba7b14e9ecd8e9f6e58fe0f614877c0c7154ac0951b65378cacf5bff78a",
+      "bodyTextPrefix": "STUDIO Samehand Same CGI. The place already in the picture stays",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Samehand",
+      "hasCanvas": false,
+      "bodyTextLen": 382,
+      "bodyTextHash": "2be0b92e6f5aeeb9c3161eb92cf61b57f021f09072e8415ff2d70300ddac1237",
+      "bodyTextPrefix": "STUDIO Samehand Same CGI. The place already in the picture stays",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": true,
+  "baselineReasons": [
+    "desktop: body text changed (382 -> 437 chars, hash mismatch)"
+  ]
+}
