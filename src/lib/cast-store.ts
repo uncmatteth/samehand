@@ -60,6 +60,8 @@ type CastState = {
 };
 
 let persistChain: Promise<void> = Promise.resolve();
+const BIBLE_REV = "8";
+
 let setupOnce = false;
 let normEpoch = 0;
 let normStop = false;
@@ -132,7 +134,7 @@ function nameFromFile(file: File): string {
 
 async function fetchRootBlob(fileName: string): Promise<Blob | null> {
   try {
-    const res = await fetch(`/living-worlds/${fileName}`);
+    const res = await fetch(`/living-worlds/${fileName}?v=${BIBLE_REV}`);
     if (!res.ok) return null;
     return await res.blob();
   } catch {
@@ -349,6 +351,16 @@ export const useCast = create<CastState>((set, get) => ({
     set({ hydrating: true });
     try {
       const snap = await loadCast();
+      const rev =
+        typeof localStorage !== "undefined"
+          ? localStorage.getItem("samehand-bible-rev")
+          : BIBLE_REV;
+      if (rev !== BIBLE_REV) {
+        set({ hydrating: false });
+        await get().setupLivingWorlds({ force: true, silent: true });
+        localStorage.setItem("samehand-bible-rev", BIBLE_REV);
+        return;
+      }
       const members = snap.members.map(toMember);
       set({ members, hydrating: false, normRun: "idle" });
       if (members.length === 0 && !setupOnce) {

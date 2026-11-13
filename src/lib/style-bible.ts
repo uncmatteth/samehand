@@ -13,6 +13,11 @@ const KEEP_SCENE =
   "Do not replace the place. Do not invent a new location, table, case, room, forest, ground, or sky that is not already there. " +
   "Do not remove props, ground, or backdrop that are already there. ";
 
+const LIFT_WEAK =
+  "The source may be a phone photo, a blurry still, a small crop, a screenshot, or a rough drawing. That is enough. " +
+  "Finish it as a clean, sharp Living Worlds illustration. Repair blur, mush, bad light, and broken hands. " +
+  "Do not leave it looking like the rough photo. Do not redesign the person, costume, pose, or place. ";
+
 const CRAFT =
   "Living Worlds Craft is one series renderer: cohesive fantasy production art with faceted costume planes, warm lantern light, readable inhabited spaces, " +
   "riveted metal, timber, crystal, soft atmospheric depth, consistent anatomy and hands. " +
@@ -24,6 +29,7 @@ export const ARTIST_PROMPT =
   IDENTITY_LOCK +
   KEEP_SCENE +
   CRAFT +
+  LIFT_WEAK +
   "Color science grades materials in place; do not grow a forest to force a palette. " +
   "Light is the scene's own lights under series craft. Every page must look like the same production.";
 
@@ -32,7 +38,8 @@ export const PLACE_PROMPT =
   KEEP_SCENE +
   "Living Worlds Craft is rendering craft only — cohesive series production art. " +
   "No cartoon style-hop, no cel shading, no inventing a new world. " +
-  "Light must match the scene. Keep the scene's own colors and place.";
+  "Light must match the scene. Keep the scene's own colors and place. " +
+  LIFT_WEAK;
 
 export const ARTIFACT_PROMPT =
   IDENTITY_LOCK +
@@ -40,7 +47,8 @@ export const ARTIFACT_PROMPT =
   KEEP_SCENE +
   "Living Worlds Craft is the renderer only: tactile metal, glass, wood, parchment, crystal, and stone as series production art. " +
   "Forbidden: cartoon style-hop, adding furniture, changing the place. " +
-  "Keep the object's own markings, inner glow, and materials.";
+  "Keep the object's own markings, inner glow, and materials. " +
+  LIFT_WEAK;
 
 export function promptForMode(mode: RestyleMode, castLock = ""): string {
   const base =
@@ -135,6 +143,7 @@ export function promptForNormalize(opts: {
     "Normalize this still into the one Living Worlds series craft so every bible root looks like the same production. " +
     "Fix inconsistent hands and anatomy only if broken; do not redesign the character. " +
     "Do not invent extra people. Do not change the place already in the frame. " +
-    "One pass. Same show as the rest of the series bible."
+    "One pass. Same show as the rest of the series bible. " +
+    LIFT_WEAK
   );
 }

@@ -28,9 +28,9 @@ export const LIVING_WORLDS_TEMPLATE: TemplateRow[] = [
     tier: "A",
     costumeNotes:
       "Rust-red long coat, graying brown hair/beard, dark scarf and gloves. Red marker object — preserve design.",
-    notes: "Series lead. Not the historical blue shearling harbor men.",
+    notes: "Solo root. Center man from the old trio. Red marker stays his.",
     e01: true,
-    rootFile: "kael-trio.png",
+    rootFile: "kael-solo.jpg",
   },
   {
     name: "Tamsin",
@@ -46,18 +46,18 @@ export const LIVING_WORLDS_TEMPLATE: TemplateRow[] = [
     tier: "B",
     costumeNotes:
       "Dark tied-back hair with white forelock, teal-blue coat, mustard-yellow scarf.",
-    notes: "Yellow-scarf woman beside Mara — not the green-coated redhead.",
+    notes: "Solo root. Yellow scarf and white forelock. Not the green-coated redhead.",
     e01: true,
-    rootFile: "sera.png",
+    rootFile: "sera-solo.jpg",
   },
   {
     name: "Anja",
     tier: "B",
     costumeNotes:
       "Auburn braid, broad-collared gray windcoat, gray neck layers.",
-    notes: "Different person from Sera.",
+    notes: "Solo root. Different person from Sera.",
     e01: true,
-    rootFile: "anja.png",
+    rootFile: "anja-solo.jpg",
   },
   {
     name: "Helena",
@@ -100,45 +100,45 @@ export const LIVING_WORLDS_TEMPLATE: TemplateRow[] = [
     tier: "B",
     costumeNotes:
       "Black man, short tightly curled hair, navy/blue uniform with gold trim.",
-    notes: "No personal name. Use Citadel Guard.",
+    notes: "Solo root. The uniformed man only. Not Mara.",
     e01: true,
-    rootFile: "guard-mara.png",
+    rootFile: "guard-solo.jpg",
   },
   {
     name: "Joran",
     tier: "B",
     costumeNotes:
-      "Broad, bald, dark beard, ochre shirt, heavy brown apron.",
-    notes: "Forge foreman with blankets in joran-kael.",
+      "Broad, dark wavy hair (not bald), lighter olive skin, full black beard, ochre shirt, heavy brown apron, holding blankets.",
+    notes: "Solo root. Has hair. Not Ilex. Not Kael.",
     e01: true,
-    rootFile: "joran-kael.png",
+    rootFile: "joran-solo.jpg",
   },
   {
     name: "Ilex",
     tier: "B",
     costumeNotes:
-      "Huge bald man, dark-brown skin, gray goatee, olive shirt, leather apron, pruning billhook.",
-    notes: "Locked.",
+      "Huge, completely bald, deep dark-brown skin, short gray goatee, olive shirt, leather apron, pruning billhook.",
+    notes: "Solo root. The bald orchard man. Not Joran.",
     e01: true,
-    rootFile: "ilex.png",
+    rootFile: "ilex-solo.jpg",
   },
   {
     name: "Oru",
     tier: "B",
     costumeNotes:
-      "Mature brown woman, gray-streaked low ponytail, blue-gray work coat.",
-    notes: "Bandage after late E02; E01 signal only.",
+      "Lean, wiry, deep brown skin, long face, short solid-black hair with no gray streak, fitted blue-gray work coat, tool belt. No scarf.",
+    notes: "New face. Lean. Must not match Sera. No white forelock.",
     e01: true,
-    rootFile: "oru.png",
+    rootFile: "oru-solo.jpg",
   },
   {
     name: "House residents",
     tier: "B",
     costumeNotes:
       "Woman: brown bun, beige dress/brown vest. Man: older, gray beard, flat cap.",
-    notes: "Unnamed pair. Anchor to house-residents.png.",
+    notes: "The doorway pair only. No one else.",
     e01: true,
-    rootFile: "house-residents.png",
+    rootFile: "house-solo.jpg",
   },
   {
     name: "Custodian",
@@ -153,10 +153,10 @@ export const LIVING_WORLDS_TEMPLATE: TemplateRow[] = [
     name: "Lio",
     tier: "B",
     costumeNotes:
-      "Long brown braid, cream sleeves, gray-brown vest/dress. Mara's mother.",
-    notes: "Memory/E02+. Leaf plate root.",
+      "Mara's mother, late forties, olive skin, no freckles, dark hair with a little silver in a low bun, no braid. Cream sleeves, gray-brown vest.",
+    notes: "Solo root. Older than Mara. Not a second Mara. Leaf window.",
     e01: false,
-    rootFile: "lio-memory.png",
+    rootFile: "lio-solo.jpg",
   },
   {
     name: "Historical Orchard trader",

@@ -43,8 +43,8 @@ export function StudioApp() {
       <header className="sticky top-0 z-20 border-b border-ink/10 bg-paper/95 backdrop-blur-sm">
         <div className="mx-auto flex max-w-lg flex-col gap-3 px-5 py-4">
           <div>
-            <h1 className="font-display text-3xl font-medium tracking-display">
-              Samehand
+            <h1 className="font-display text-2xl font-medium leading-snug tracking-display">
+              Draw Me Like One of Your French Girls Uncle Matt
             </h1>
             <p className="mt-1 text-sm text-muted">
               Two steps only. Characters first, then episode pictures.
@@ -118,7 +118,7 @@ export function StudioApp() {
               </h2>
               <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-muted">
                 <li>Lock the house look (one button)</li>
-                <li>Drop your photos</li>
+                <li>Drop your photos — blurry or rough is fine</li>
                 <li>Press Proof 1 — check that one</li>
                 <li>Press Restyle remaining</li>
                 <li>Zip when done</li>
@@ -132,7 +132,7 @@ export function StudioApp() {
                 <StudioToolbar aiAvailable={aiAvailable} simple />
                 <DropZone
                   label="Drop your episode photos here"
-                  hint="All 167, or smaller batches. Wait for cropping to finish."
+                  hint="Blurry, small, or rough is fine. The restyle finishes them."
                   multiple
                   className="min-h-32 rounded-xl bg-paper-2 px-5 py-8 shadow-[var(--shadow-border)]"
                   onFiles={(files) => void addPages(files)}
